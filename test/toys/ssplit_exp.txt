@@ -1,0 +1,18 @@
+the ui component size is 16 bytes
+
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb

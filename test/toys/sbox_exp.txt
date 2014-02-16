@@ -1,0 +1,18 @@
+the ui component size is 152 bytes
+
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaaaaaabbbbbbbb
+aaaa        bbbb
+aaaa        bbbb
+aaaa        bbbb
+aaaa click! bbbb
+cccc        cccc
+cccc        cccc
+cccc        cccc
+cccc        cccc
+cccccccccccccccc
+cccccccccccccccc
+cccccccccccccccc
+cccccccccccccccc
