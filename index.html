@@ -37,20 +37,21 @@
 <p>libtoys demonstrates an idea of microwidgets, which are simplest possible UI widgets doing exactly one things and nothing more. For example the libtoys library contains following widgets:</p>
 
 <ul>
-<li>sz       - sets size to the toy parameter</li>
+<li>sz       - sets size of the enclosed micro widget</li>
 <li>split    - splits an area in either x, y or z dimension. </li>
 <li>lay      - positions a toy up, down, left, middle or some other 
             relative or absolute coordinate.</li>
 <li>tx       - a simple string</li>
 <li>rc       - rectangle</li>
 <li>on_click - consumes a mouse click hitting the microwidget region.</li>
-</ul><p>These widgets can be used e.g. in following ways to construct a button (code is C++14):</p>
+</ul><p>For example, these widgets can be used in following way to construct a button (code is C++14):</p>
 
-<p><code>
-auto quit = sz(xy(100, 25), 
-               on_click([](click&amp;){ system::exit(0); },
-                fb(lay(mid, tx("exit", f, black)), rc(rgba{200, 200, 200,0})));
-</code></p>
+<div class="highlight highlight-C++"><pre><span class="k">auto</span> <span class="n">quit</span> <span class="o">=</span> 
+    <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>                                <span class="c1">// 1. set size</span>
+       <span class="n">on_click</span><span class="p">([](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">){</span> <span class="n">system</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">},</span>    <span class="c1">// 2. exit on click</span>
+                <span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"exit"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="c1">// 3. text on front middle</span>
+                   <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>    <span class="c1">// 4. rectangle background</span>
+</pre></div>
 
 <p>sz determines the component to be pixel 100 wide and 25 pixel high. on_click makes application 'exit' when the component is clicked. lay(mid, x) positions the text in the middle and fb splits the 'space' into foreground and background, where the text (tx) is layouted front and rectangle (rc) is layouted back. </p>
 
@@ -62,11 +63,12 @@ auto quit = sz(xy(100, 25),
 <ul>
 <li>small learning overhead. libtoys contains half dozen primitives. if it seeks real usage this number will inevitably grow, but not necessarily much.</li>
 <li>the small base of simple but powerful items is easy master. this easiness to master comprehend the powerful tool set is expected to make the programming much more productive and efficient.</li>
-<li>the abstract technical items are forever (e.g. BSD sockets), while more specific services tend to....<br>
-</li>
+<li>the abstract technical items are forever (e.g. BSD sockets), while more specific services tend to....<br><ol>
 <li>...not entirely fit the users needs (some widget is inadequate or missing) </li>
 <li>...obsolete as the technology advances or the needs change. </li>
 <li>This leads to wide creation of custom UI components, which creation most UI toolkits allow, but do not specially support.</li>
+</ol>
+</li>
 </ul><p>Other design goals of libtoys have been:</p>
 
 <ul>
@@ -93,46 +95,42 @@ auto quit = sz(xy(100, 25),
 
 <p>The code also demonstrates the 3 functions used for creating split-microwidgets. These functios are 'ud' splitting widget to up and down parts, 'lr' splitting widget into left and right parts and fb splitting widget into front and back parts</p>
 
-<p>`
-int main(int argc, char** argv) {
-    using namespace toys;
-    using namespace toys::sdl;
-    using namespace toys::sdl::vals;
-    sdltoys i;
-    font f("/usr/share/fonts/truetype/freefont/FreeMono.ttf", 20);</p>
+<div class="highlight highlight-C++"><pre><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="p">;</span>
+    <span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="p">;</span>
+    <span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="o">::</span><span class="n">vals</span><span class="p">;</span>
+    <span class="n">sdltoys</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">font</span> <span class="n">f</span><span class="p">(</span><span class="s">"/usr/share/fonts/truetype/freefont/FreeMono.ttf"</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
-<pre><code>const rgba black{0, 0, 0, 0}; // this is constant
-rgba c{100, 100, 0, 0};       // this is used by reference
-auto rgbtxt = prop([&amp;c]() {       // this is property generated by lambda
-    std::ostringstream buf;
-    buf&lt;&lt;"r:"&lt;&lt;int(c.r)&lt;&lt;",g:"&lt;&lt;int(c.g)&lt;&lt;",b:"&lt;&lt;int(c.b);
-    return buf.str();
-});
+    <span class="k">const</span> <span class="n">rgba</span> <span class="n">black</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span> <span class="c1">// this is constant</span>
+    <span class="n">rgba</span> <span class="n">c</span><span class="p">{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>       <span class="c1">// this is used by reference</span>
+    <span class="k">auto</span> <span class="n">rgbtxt</span> <span class="o">=</span> <span class="n">prop</span><span class="p">([</span><span class="o">&amp;</span><span class="n">c</span><span class="p">]()</span> <span class="p">{</span>       <span class="c1">// this is property generated by lambda</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span> <span class="n">buf</span><span class="p">;</span>
+        <span class="n">buf</span><span class="o">&lt;&lt;</span><span class="s">"r:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">r</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">",g:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">g</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">",b:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="p">});</span>
 
-// widgets on screen
-auto moreblue = on_click([&amp;c](click&amp;){c.b+=25; },
-                 fb(lay(mid, tx("more blue", f, black)), rc(rgba{200,200,250,0})));
-auto text = lay(mid, tx(rgbtxt, f, black));
-auto quit = on_click([](click&amp;){ system::exit(0); },
-                     fb(lay(mid, tx("exit", f, black)), rc(rgba{200, 200, 200,0})));
+    <span class="c1">// widgets on screen</span>
+    <span class="k">auto</span> <span class="n">moreblue</span> <span class="o">=</span> <span class="n">on_click</span><span class="p">([</span><span class="o">&amp;</span><span class="n">c</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">){</span><span class="n">c</span><span class="p">.</span><span class="n">b</span><span class="o">+=</span><span class="mi">25</span><span class="p">;</span> <span class="p">},</span>
+                     <span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"more blue"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>
+    <span class="k">auto</span> <span class="n">text</span> <span class="o">=</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="n">rgbtxt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">quit</span> <span class="o">=</span> <span class="n">on_click</span><span class="p">([](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">){</span> <span class="n">system</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">},</span>
+                         <span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"exit"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>
 
-// the ui
-auto z = fb(ud(0.33,  // allocate 33% to text and rest to buttons
-               text,
-               ud(0.5, lay(mid, sz(xy(0.5, 0.5), moreblue)),
-           lay(mid, sz(xy(0.5, 0.5), quit)))),
-            rc(std::ref(c)));
+    <span class="c1">// the ui</span>
+    <span class="k">auto</span> <span class="n">z</span> <span class="o">=</span> <span class="n">fb</span><span class="p">(</span><span class="n">ud</span><span class="p">(</span><span class="mf">0.33</span><span class="p">,</span>  <span class="c1">// allocate 33% to text and rest to buttons</span>
+                   <span class="n">text</span><span class="p">,</span>
+                   <span class="n">ud</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">moreblue</span><span class="p">)),</span>
+               <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">quit</span><span class="p">)))),</span>
+                <span class="n">rc</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">c</span><span class="p">)));</span>
 
-printf("quit size is %lu B\n", sizeof(text)); // 96 B  on my machine
-printf("toy size is %lu B\n", sizeof(z));     // 344 B on my machine
+    <span class="n">printf</span><span class="p">(</span><span class="s">"quit size is %lu B</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">text</span><span class="p">));</span> <span class="c1">// 96 B  on my machine</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"toy size is %lu B</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">z</span><span class="p">));</span>     <span class="c1">// 344 B on my machine</span>
 
-window&lt;decltype(z)&amp;&gt; wnd("foo", vec(), {400, 400}, z);
-return i.run(&amp;wnd);
-</code></pre>
-
-<p>}</p>
-
-<p>`</p>
+    <span class="n">window</span><span class="o">&lt;</span><span class="n">decltype</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">&amp;&gt;</span> <span class="n">wnd</span><span class="p">(</span><span class="s">"foo"</span><span class="p">,</span> <span class="n">vec</span><span class="p">(),</span> <span class="p">{</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">},</span> <span class="n">z</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wnd</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 
 <h1>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h1>
