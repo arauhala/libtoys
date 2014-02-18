@@ -34,19 +34,24 @@
         <h3>
 <a name="introduction-to-libtoys" class="anchor" href="#introduction-to-libtoys"><span class="octicon octicon-link"></span></a>Introduction to libtoys</h3>
 
-<p>libtoys demonstrates an idea of microwidgets, which are simplest possible UI widgets doing exactly one things and nothing more. For example the libtoys library contains following widgets:</p>
+<p>libtoys demonstrates an idea of micro widgets, which are simplest possible UI widgets doing exactly one things and nothing more. As an example following main micro widgets are provided by the libtoys library:</p>
 
 <ul>
-<li>sz       - determines the size of the enclosed micro widget</li>
-<li>split    - splits an area in either x, y or z dimension. 
-            split is normally constructed by functions lr (left right), 
-            ud (up down) or fb (front back). </li>
-<li>lay      - positions a toy up, down, left, middle or in some other 
-            relative or absolute coordinate.</li>
-<li>tx       - a simple string</li>
-<li>rc       - rectangle</li>
-<li>on_click - consumes a mouse click hitting the microwidget region.</li>
-</ul><p>For example, these widgets can be used in following way to construct a button (code is C++14):</p>
+<li>tx       - text, e.g. <code>tx("hello", calibriFont, rgba{0,0,0,255})</code>
+</li>
+<li>rc       - rectangle, e.g. <code>rc(black)</code>
+</li>
+<li>sz       - determines the size of the enclosed micro widget, e.g. <code>sz(xy(50, 50),rc(black))</code>
+</li>
+<li>lr, ud, fb - splits area in either x, y or z dimension. e.g. <code>lr(rc(red), rc(blue))</code>
+          has red left half and blue right half.</li>
+<li>lay      - positions a toy in a relative or absolute coordinate. 
+           e.g. <code>lay(xy(0.5,0.5),tx("middle",f, c))</code>
+</li>
+<li>on_click - triggers even for a click hitting the widget region.
+           e.g. <code>on_click([](click&amp;){exit()},tx("click to exit",f,c))</code>
+</li>
+</ul><p>As an example, these widgets can be combined to create a button (code is C++14):</p>
 
 <div class="highlight highlight-C++"><pre><span class="k">auto</span> <span class="n">quit</span> <span class="o">=</span> 
     <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>                                <span class="c1">// 1. set size</span>
@@ -55,29 +60,24 @@
                    <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>    <span class="c1">// 4. rectangle background</span>
 </pre></div>
 
-<p>sz determines the component to be 100 pixel wide and 25 pixel high. on_click makes application 'exit' when the component is clicked. lay(mid, x) positions the text in the middle and fb splits the 'space' into foreground and background, where the text (tx) is layouted front and rectangle (rc) is layouted back. </p>
-
 <h3>
 <a name="design-and-capabilities" class="anchor" href="#design-and-capabilities"><span class="octicon octicon-link"></span></a>Design and capabilities</h3>
 
-<p>While libtoys is a proof of concept and simply lacks maturity to support real development, the basic design combines many ideas and values that can be considered valuable. Here the leading idea behind libtoys is minimalism and genericity and it follows strictly the UNIX idea that the system should consist of minimalistic tools doing one thing right, and the power should raise from the way the components are combined. The extreme minimalism brings many benefits: </p>
+<p>While libtoys is a proof of concept and simply lacks maturity to support real development, the basic design combines many ideas and values that can be considered valuable. The leading idea behind 
+libtoys is minimalism and it follows strictly the UNIX idea that the system should consist of minimalistic tools doing one orthogonal thing right, and the power should raise from the way the components are combined. The extreme minimalism brings many benefits: </p>
 
 <ul>
-<li>small learning overhead. libtoys contains less than dozen primitives. if it seeks real usage this number will inevitably grow, but not necessarily much.</li>
-<li>the small base of simple but powerful items is easy master. this easiness to master comprehend the powerful tool set is expected to make the programming much more productive and efficient.</li>
-<li>the abstract technical items are forever (e.g. BSD sockets), while more specific services tend to....<br><ol>
-<li>...not entirely fit the users needs (some widget is inadequate or missing) </li>
-<li>...obsolete as the technology advances or the needs change. </li>
-<li>This leads to wide creation of custom UI components, which creation most UI toolkits allow, but do not specially support.</li>
-</ol>
-</li>
-</ul><p>Other design goals of libtoys have been:</p>
+<li>Small learning overhead. libtoys contains less than dozen extremely simple primitives and while it the number will undoubtedly grow, the library should remain relatively simple &amp; small.</li>
+<li>The small base of simple but powerful items is easy master. This easiness to master comprehend the powerful tool set is expected to make the programming more productive and efficient.</li>
+</ul><p>Also often the abstract technical primitives are forever (e.g. BSD sockets), while more specific services tend to not fully fulfil the wavering application needs. E.g  bigger applications (and especially games) may rely almost entirely on custom components. libtoys does not even try to provide ready-to-use widgets, but merely provides a tool set for making your own.</p>
+
+<p>Other design goals of libtoys are:</p>
 
 <ul>
-<li>Genericity. libtoys can be used to layout and draw 'text' (as demonstrated in unit test cases) as well to treat normal 2D graphics (as demonstrated by the OpenSDL usage). libtoys can likely be ported to curses and used in interactive terminal. </li>
-<li>Declarativeness. You can create diverse custom components and layouts without writing a line of imperative drawing or layouting code.</li>
-<li>Statelessness. All microwidgets are stateless. The statelessness reduces the complexity by lot and eliminates classes of bugs. Statelessness also allows reuse of widget instances. </li>
-<li>Terseness. creating a micro widget component can be done inline and requires 0 class definitions. short names are preferred over more verbose names.</li>
+<li>Generality. libtoys can be used to layout and draw 'text' (as demonstrated in unit test cases)  and to treat normal 2D graphics (as demonstrated by the OpenSDL usage). E.g. it should possible to port the toys to work with libcurses.</li>
+<li>Declarativeness. This reduces redundancy, bugs and needed effort.</li>
+<li>Statelessness. All micro widgets are stateless. The statelessness reduces the complexity by lot and eliminates classes of bugs. Statelessness also allows reuse of widget instances. </li>
+<li>Terseness. Composing widget from micro widgets can be done inline with few lines of code. Class definitions or explicit memory management are not required. </li>
 <li>Minimized overhead. 
 
 <ol>
@@ -86,9 +86,9 @@
 <li>This compile-time composition should also flatten and inline the generated template code making the single highly optimized and flat draw &amp; layouting routines for single widget instead of generating routines for all dozens of specialized microwidgets.</li>
 </ol>
 </li>
-</ul><p>Also the extreme simplicity, declarativeness, statelessness and terseness are expected to improve productivity. At least this is my own experience having worked with similar UI kit (I created for Java). You can quickly master the simple toolkit and you need to write very little code and care for very few things, which makes things much easier &amp; faster. </p>
+</ul><p>The expectation is that the simplicity, declarativeness, statelessness and terseness improve productivity. Also providing technical primitives instead of high level services/policy typically means that the framework won't get in your way. This reflects  my own experience of having worked with similar UI kit I created for Java.</p>
 
-<p>Of course: you cannot actually get much done with the library yet, as it is incomplete. Also solution has its issues like verbose errors for mistakes (because heavy template usage) and there may be potential for badly scaling layouting calculations, because lack of states (all thought compiler may optimize recalculations out when widgets are composed compile-time via templates and the problem can anyway be solved by adding stateful 'cache' microwidgets in deep microwidget structures.). </p>
+<p>Of course: you cannot get that much done with the library yet, as it is incomplete. Also solution has its issues like verbose errors for mistakes (because heavy template usage) and there may be potential for badly scaling layouting calculations, because lack of states (all thought compiler may optimize recalculations out when widgets are composed compile-time via templates and the problem can anyway be solved by adding stateful 'cache' microwidgets in deep microwidget structures.). There are also likely bugs and design issues, because library's young age.</p>
 
 <h3>
 <a name="code-sample--screenshot" class="anchor" href="#code-sample--screenshot"><span class="octicon octicon-link"></span></a>Code sample &amp; screenshot:</h3>
@@ -98,116 +98,118 @@
 <ol>
 <li>...writing a simple interactive UI...</li>
 <li>...with a manipulated state (variable c) and a dynamic property (rgbtext) that changes when c is modified </li>
-<li>...and how to encapsulate compile-time composed widgets in separate modules via itoy interface and how to use encapsulated widgets.</li>
-</ol><p>```C++#include "toys/sdl.h"</p>
+<li>...and how to encapsulate compile-time composed widgets in separate modules via itoy interface and how to use the encapsulated widgets.</li>
+</ol><div class="highlight highlight-C++"><pre><span class="cp">#include "toys/sdl.h"</span>
+<span class="cp">#include &lt;sstream&gt;</span>
 
-<h1>
-<a name="include-" class="anchor" href="#include-"><span class="octicon octicon-link"></span></a>include </h1>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="o">::</span><span class="n">vals</span><span class="p">;</span>
 
-<p>using namespace std;
-using namespace toys;
-using namespace toys::sdl;
-using namespace toys::sdl::vals;</p>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">make_radio_button</span><span class="p">(</span><span class="k">const</span> <span class="n">font</span><span class="o">&amp;</span> <span class="n">f</span><span class="p">,</span> <span class="k">const</span> <span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="o">&gt;&amp;</span> <span class="n">changed</span><span class="p">);</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">make_resizing_item</span><span class="p">();</span>
 
-<p>unique_ptr make_radio_button(const font&amp; f, const function&amp; changed);
-unique_ptr make_resizing_item();</p>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// set up infra. sdltoys constructor initializes SDL  </span>
+    <span class="n">sdltoys</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">font</span> <span class="n">f</span><span class="p">(</span><span class="s">"/usr/share/fonts/truetype/freefont/FreeMono.ttf"</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
-<p>int main(int argc, char** argv) {
-    // set up infra. sdltoys constructor initializes SDL<br>
-    sdltoys i;
-    font f("/usr/share/fonts/truetype/freefont/FreeMono.ttf", 20);</p>
+    <span class="c1">// data used by widgets</span>
+    <span class="k">const</span> <span class="n">rgba</span> <span class="n">black</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>   <span class="c1">// this is immutable</span>
+    <span class="n">rgba</span> <span class="n">c</span><span class="p">{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>       <span class="c1">// this is mutable state used by reference</span>
+    <span class="k">auto</span> <span class="n">rgbtxt</span> <span class="o">=</span> <span class="n">prop</span><span class="p">([</span><span class="o">&amp;</span><span class="n">c</span><span class="p">]()</span> <span class="p">{</span>     <span class="c1">// this is dynamic state produced by lambda</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span> <span class="n">buf</span><span class="p">;</span>
+        <span class="n">buf</span><span class="o">&lt;&lt;</span><span class="s">"r:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">r</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">",g:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">g</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">",b:"</span><span class="o">&lt;&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="p">});</span>
 
-<pre><code>// data used by widgets
-const rgba black{0, 0, 0, 0};   // this is immutable
-rgba c{100, 100, 100, 0};       // this is mutable state used by reference
-auto rgbtxt = prop([&amp;c]() {     // this is dynamic state produced by lambda
-    std::ostringstream buf;
-    buf&lt;&lt;"r:"&lt;&lt;int(c.r)&lt;&lt;",g:"&lt;&lt;int(c.g)&lt;&lt;",b:"&lt;&lt;int(c.b);
-    return buf.str();
-});
+    <span class="k">auto</span> <span class="n">radio</span> <span class="o">=</span> <span class="n">make_radio_button</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">c</span><span class="p">](</span><span class="kt">bool</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">c</span><span class="p">.</span><span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">?</span><span class="mi">200</span><span class="o">:</span><span class="mi">100</span><span class="p">);</span> <span class="p">});</span>
+    <span class="k">auto</span> <span class="n">titledradio</span> <span class="o">=</span> <span class="n">lr</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"green:"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">radio</span><span class="p">.</span><span class="n">get</span><span class="p">()));</span>
 
-auto radio = make_radio_button(f, [&amp;c](bool v) { c.g = (v?200:100); });
-auto titledradio = lr(0.5, lay(mid, tx("green:", f, black)), lay(mid, radio.get()));
+    <span class="k">auto</span> <span class="n">resizing</span> <span class="o">=</span> <span class="n">make_resizing_item</span><span class="p">();</span>
 
-auto resizing = make_resizing_item();
+    <span class="k">auto</span> <span class="n">text</span> <span class="o">=</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="n">rgbtxt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">moreblue</span> <span class="o">=</span> <span class="n">on_click</span><span class="p">([</span><span class="o">&amp;</span><span class="n">c</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">){</span><span class="n">c</span><span class="p">.</span><span class="n">b</span><span class="o">+=</span><span class="mi">32</span><span class="p">;</span> <span class="p">},</span>
+                             <span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"more blue"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>
+    <span class="k">auto</span> <span class="n">quit</span> <span class="o">=</span> <span class="n">on_click</span><span class="p">([](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">){</span> <span class="n">system</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">},</span>
+                         <span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"exit"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">})));</span>
 
-auto text = lay(mid, tx(rgbtxt, f, black));
-auto moreblue = on_click([&amp;c](click&amp;){c.b+=32; },
-                         fb(lay(mid, tx("more blue", f, black)), rc(rgba{200,200,250,0})));
-auto quit = on_click([](click&amp;){ system::exit(0); },
-                     fb(lay(mid, tx("exit", f, black)), rc(rgba{200, 200, 200,0})));
+    <span class="k">auto</span> <span class="n">z</span> <span class="o">=</span> <span class="n">fb</span><span class="p">(</span><span class="n">ud</span><span class="p">(</span><span class="mf">0.33</span><span class="p">,</span>
+                   <span class="n">text</span><span class="p">,</span>
+                   <span class="n">ud</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span>
+                      <span class="n">lr</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">titledradio</span><span class="p">,</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">resizing</span><span class="p">.</span><span class="n">get</span><span class="p">())),</span>
+                         <span class="n">lr</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mf">0.67</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">moreblue</span><span class="p">)),</span>
+                                 <span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mf">0.67</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">quit</span><span class="p">))))),</span>
+                <span class="n">rc</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">c</span><span class="p">)));</span>
 
-auto z = fb(ud(0.33,
-               text,
-               ud(0.5,
-                  lr(0.5, titledradio, lay(mid, resizing.get())),
-                     lr(0.5, lay(mid, sz(xy(0.67, 0.5), moreblue)),
-                             lay(mid, sz(xy(0.67, 0.5), quit))))),
-            rc(std::ref(c)));
+    <span class="n">window</span><span class="o">&lt;</span><span class="n">decltype</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">&amp;&gt;</span> <span class="n">wnd</span><span class="p">(</span><span class="s">"foo"</span><span class="p">,</span> <span class="n">vec</span><span class="p">(),</span> <span class="p">{</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">},</span> <span class="n">z</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wnd</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 
-window&lt;decltype(z)&amp;&gt; wnd("foo", vec(), {400, 400}, z);
-return i.run(&amp;wnd);
-</code></pre>
+<p>Functions make_radio_button and make_resizing are defined in a separate file. 
+They demonstrate two different ways how micro widgets can be composed in encapsulated 
+way that hides the internal types and implementations (as you probably don't want to define complex template instances in your shared headers). The first way sets up everything in a single function body so that widget state is split into several heap blocks, while the second builds widget in single heap area, but it requires an additional class and some boilerplate code.</p>
 
-<p>}</p>
-
-<pre><code>
-Functions make_radio_button and make_resizing are defined in a separate file. 
-They demonstrate two different ways how micro widgets can be composed in e
-encapsulated way that hides internal types and implementations. The first
-way sets up everything in a single function body so that widget state is
-split into several heap blocks, while the second builds widget in single 
-heap area, but it requires an additional class.
-
-The essential interface for encapsulation is the itoy class that has 3 methods 
+<p>The essential interface for encapsulation is the itoy class that has 3 methods 
 that are a) size, b) draw and c) recv. owned_itoy or shared_itoy functions 
 can be used to wrap a compile-time composed widget inside itoy interface or
-class can implement the interface directly. 
+class can implement the interface directly as done in resizing_item class. </p>
 
-``` C++
-#include "toys/sdl.h"
-#include &lt;functional&gt;
+<div class="highlight highlight-C++"><pre><span class="cp">#include "toys/sdl.h"</span>
+<span class="cp">#include &lt;functional&gt;</span>
 
-using namespace toys::sdl::vals;
-using namespace toys::sdl;
-using namespace toys;
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="o">::</span><span class="n">vals</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="o">::</span><span class="n">sdl</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">toys</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-// following widget does not require separate class definition, but its state gets allocated in heap
-unique_ptr&lt;itoy&gt; make_radio_button(const font&amp; f, const function&lt;void (bool)&gt;&amp; changed) {
-    shared_ptr&lt;bool&gt; state(new bool(false));
-    rgba black{0, 0, 10, 0};
-    shared_ptr&lt;itoy&gt; on = shared_itoy(fb(lay(mid, tx("on", f, black)), rc(rgba{150, 250, 150, 0})));
-    shared_ptr&lt;itoy&gt; off = shared_itoy(fb(lay(mid, tx("off", f, black)), rc(rgba{250, 150, 150, 0})));
-    return
-        owned_itoy(
-        sz(xy(75, 50),
-                on_click([state, changed](click&amp;) {*state = !*state; changed(*state);},
-                         prop([state, &amp;f, on, off, black] () { 
-                                  return *state ? on.get() : off.get();
-                   }))));
-}
+<span class="c1">// following widget does not require separate class definition, but its state gets allocated in heap</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">make_radio_button</span><span class="p">(</span><span class="k">const</span> <span class="n">font</span><span class="o">&amp;</span> <span class="n">f</span><span class="p">,</span> <span class="k">const</span> <span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="o">&gt;&amp;</span> <span class="n">changed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">state</span><span class="p">(</span><span class="k">new</span> <span class="kt">bool</span><span class="p">(</span><span class="nb">false</span><span class="p">));</span>
+    <span class="n">rgba</span> <span class="n">black</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">on</span> <span class="o">=</span> <span class="n">shared_itoy</span><span class="p">(</span><span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"on"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">0</span><span class="p">})));</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">off</span> <span class="o">=</span> <span class="n">shared_itoy</span><span class="p">(</span><span class="n">fb</span><span class="p">(</span><span class="n">lay</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">tx</span><span class="p">(</span><span class="s">"off"</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">black</span><span class="p">)),</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">0</span><span class="p">})));</span>
+    <span class="k">return</span>
+        <span class="nf">owned_itoy</span><span class="p">(</span>
+        <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+                <span class="n">on_click</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="n">changed</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">)</span> <span class="p">{</span><span class="o">*</span><span class="n">state</span> <span class="o">=</span> <span class="o">!*</span><span class="n">state</span><span class="p">;</span> <span class="n">changed</span><span class="p">(</span><span class="o">*</span><span class="n">state</span><span class="p">);},</span>
+                         <span class="n">prop</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">black</span><span class="p">]</span> <span class="p">()</span> <span class="p">{</span> 
+                                  <span class="k">return</span> <span class="o">*</span><span class="n">state</span> <span class="o">?</span> <span class="n">on</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">:</span> <span class="n">off</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+                   <span class="p">}))));</span>
+<span class="p">}</span>
 
-// composing a stateful and flat (not split into several memory blocks) widget from stateless
-// microwidgets is possible, if a bit clumsy.
-auto make_resizing_toy(vec* v) {
-    return on_click([v](click&amp; c){*v = (v-&gt;x() == 50) ? vec(100, 100) :vec(50,50); },
-                    sz([v](vec){return *v;}, rc(rgba{255, 255, 255, 0})));
-}
-class resizing_item : public itoy {
-private:
-    vec sz_;
-    decltype(make_resizing_toy(0)) toy_;
-public:
-    resizing_item() : sz_(50, 50), toy_(make_resizing_toy(&amp;sz_)) {}
-    vec size(const vec&amp; size) const                    { return toy_-&gt;size(size); };
-    void draw(const vec&amp; size, graphics_type&amp; i) const { return toy_-&gt;draw(size, i); }
-    bool recv(const vec&amp; size, ievent&amp; e)              { return toy_-&gt;recv(size, e); }
-};
-unique_ptr&lt;itoy&gt; make_resizing_item() {
-    return unique_ptr&lt;itoy&gt;(new resizing_item());
-}
-</code></pre>
+<span class="c1">// composing a stateful and flat (not split into several memory blocks) widget from stateless</span>
+<span class="c1">// microwidgets is possible, if a bit clumsy.</span>
+<span class="k">auto</span> <span class="n">make_resizing_toy</span><span class="p">(</span><span class="n">vec</span><span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">on_click</span><span class="p">([</span><span class="n">v</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">){</span><span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">()</span> <span class="o">==</span> <span class="mi">50</span><span class="p">)</span> <span class="o">?</span> <span class="n">vec</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">:</span><span class="n">vec</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">);</span> <span class="p">},</span>
+                    <span class="n">sz</span><span class="p">([</span><span class="n">v</span><span class="p">](</span><span class="n">vec</span><span class="p">){</span><span class="k">return</span> <span class="o">*</span><span class="n">v</span><span class="p">;},</span> <span class="n">rc</span><span class="p">(</span><span class="n">rgba</span><span class="p">{</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">})));</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">resizing_item</span> <span class="o">:</span> <span class="k">public</span> <span class="n">itoy</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">vec</span> <span class="n">sz_</span><span class="p">;</span>
+    <span class="n">decltype</span><span class="p">(</span><span class="n">make_resizing_toy</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="n">toy_</span><span class="p">;</span>
+<span class="nl">public:</span>
+    <span class="n">resizing_item</span><span class="p">()</span> <span class="o">:</span> <span class="n">sz_</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">toy_</span><span class="p">(</span><span class="n">make_resizing_toy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sz_</span><span class="p">))</span> <span class="p">{}</span>
+    <span class="n">vec</span> <span class="n">size</span><span class="p">(</span><span class="k">const</span> <span class="n">vec</span><span class="o">&amp;</span> <span class="n">size</span><span class="p">)</span> <span class="k">const</span>                    <span class="p">{</span> <span class="k">return</span> <span class="n">toy_</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(</span><span class="n">size</span><span class="p">);</span> <span class="p">};</span>
+    <span class="kt">void</span> <span class="nf">draw</span><span class="p">(</span><span class="k">const</span> <span class="n">vec</span><span class="o">&amp;</span> <span class="n">size</span><span class="p">,</span> <span class="n">graphics_type</span><span class="o">&amp;</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">toy_</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">recv</span><span class="p">(</span><span class="k">const</span> <span class="n">vec</span><span class="o">&amp;</span> <span class="n">size</span><span class="p">,</span> <span class="n">ievent</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>              <span class="p">{</span> <span class="k">return</span> <span class="n">toy_</span><span class="o">-&gt;</span><span class="n">recv</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span> <span class="n">make_resizing_item</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">itoy</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">resizing_item</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>The result of the code is a simple UI with 4 widgets that can be clicked and 4 items with dynamic properties (resizing widget, radio button changes appearance, rgb text updates, background color changes). </p>
+
+<p>When application launches, it looks following: </p>
+
+<p><img src="toyexample.png" alt=""></p>
+
+<p>After clicking resizing button, putting radio widget on and clicking 'more blue' button the widget looks following: </p>
+
+<p><img src="toyexample_post.png" alt=""></p>
 
 <h1>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h1>
