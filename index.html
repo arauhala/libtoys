@@ -1,36 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Libtoys : Generic C++ microwidgets for UI development (proof of concept)" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Libtoys by arauhala</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Libtoys</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Libtoys</h1>
+        <p>Generic C++ microwidgets for UI development (proof of concept)</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/arauhala/libtoys">View on GitHub</a>
+        <p class="view"><a href="https://github.com/arauhala/libtoys">View the Project on GitHub <small>arauhala/libtoys</small></a></p>
 
-          <h1 id="project_title">Libtoys</h1>
-          <h2 id="project_tagline">Generic C++ microwidgets for UI development (proof of concept)</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/arauhala/libtoys/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/arauhala/libtoys/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+        <ul>
+          <li><a href="https://github.com/arauhala/libtoys/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/arauhala/libtoys/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/arauhala/libtoys">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h3>
 <a name="introduction-to-libtoys" class="anchor" href="#introduction-to-libtoys"><span class="octicon octicon-link"></span></a>Introduction to libtoys</h3>
 
@@ -79,11 +76,16 @@
 <p>Other design goals of libtoys are:</p>
 
 <ul>
-<li>Generality. libtoys can be used to layout and draw 'text' (as demonstrated in unit test cases) as an addition to drawing normal 2D graphics (as demonstrated by the OpenSDL usage). It is a generic template library that should be portable to many environments (e.g. libcurses).</li>
-<li>Declarativeness. This reduces redundancy, bugs and needed effort.</li>
-<li>Statelessness. All micro widgets are stateless. The statelessness reduces the complexity by lot and eliminates classes of bugs. Statelessness also allows reuse of widget instances. </li>
-<li>Terseness. Composing widget from micro widgets can be done inline with few lines of code. Class definitions or explicit memory management are not required. </li>
-<li>Minimized overhead. 
+<li>
+<strong>Generality</strong>. libtoys can be used to layout and draw 'text' (as demonstrated in unit test cases) as an addition to drawing normal 2D graphics (as demonstrated by the OpenSDL usage). It is a generic template library that should be portable to many environments (e.g. libcurses).</li>
+<li>
+<strong>Declarativeness</strong>. This reduces redundancy, bugs and needed effort.</li>
+<li>
+<strong>Statelessness</strong>. All micro widgets are stateless. The statelessness reduces the complexity by lot and eliminates classes of bugs. Statelessness also allows reuse of widget instances. </li>
+<li>
+<strong>Terseness</strong>. Composing widget from micro widgets can be done inline with few lines of code. Class definitions or explicit memory management are not required. </li>
+<li>
+<strong>Minimized overhead</strong>. 
 
 <ol>
 <li>Traditional 'macro' widget may consist of dozens or even hundreds of micro widgets (e.g. pop up list with images). Here hundreds of heap allocations could bring significant memory / computation overhead compared to traditional macro widget designs. </li>
@@ -221,17 +223,12 @@ class can implement the interface directly as done in resizing_item class. </p>
 
 <p>I (Antti Rauhala) am a software engineer and data scientist at Futurice, who has a background in systems programming, mobile, machine learning and search. My previous projects are freeform (freeform.sourceforge.net) meta language and re-expression method (libreexp.github.com) that is a new kind of representation learning method.</p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Libtoys maintained by <a href="https://github.com/arauhala">arauhala</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/arauhala">arauhala</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
+    <script src="javascripts/scale.fix.js"></script>
     
-
   </body>
 </html>
