@@ -31,20 +31,26 @@
         <h3>
 <a name="introduction-to-libtoys" class="anchor" href="#introduction-to-libtoys"><span class="octicon octicon-link"></span></a>Introduction to libtoys</h3>
 
-<p>libtoys is a proof-of-concept demonstrating an idea of micro widgets that are the simplest possible UI widgets doing exactly one things and nothing more. As an example following main micro widgets are provided by the libtoys library:</p>
+<p>libtoys is a proof-of-concept library demonstrating a design build on simplest possible UI widgets doing exactly one things and nothing more. As an addition to these 'micro widgets' being extremely simple, there are only handful of them. In fact, the main provided micro widgets are:</p>
 
 <ul>
-<li>tx       - text, e.g. <code>tx("hello", calibriFont, rgba{0,0,0,255})</code>
+<li>
+<strong>tx</strong>       - text, e.g. <code>tx("hello", calibriFont, rgba{0,0,0,255})</code>
 </li>
-<li>rc       - rectangle, e.g. <code>rc(black)</code>
+<li>
+<strong>rc</strong>       - rectangle, e.g. <code>rc(black)</code>
 </li>
-<li>sz       - determines widget size, e.g. <code>sz(xy(50, 50),rc(black))</code>
+<li>
+<strong>sz</strong>       - determines widget size, e.g. <code>sz(xy(50, 50),rc(black))</code>
 </li>
-<li>lr, ud, fb - splits widget in x, y or z dimension. e.g. <code>lr(rc(red), rc(blue))</code>
+<li>
+<strong>lr</strong>, <strong>ud</strong>, <strong>fb</strong> - splits widget in x, y or z dimension. e.g. <code>lr(rc(red), rc(blue))</code>
           has red left half and blue right half.</li>
-<li>lay      - positions widget in a relative or absolute coordinate within the area. 
+<li>
+<strong>lay</strong>      - positions widget in a relative or absolute coordinate within the area. 
            e.g. <code>lay(xy(0.5,0.5),tx("middle",f, c))</code> layouts the text in the middle.</li>
-<li>on_click - executes function, when widget is clicked.
+<li>
+<strong>on_click</strong> - executes function, when widget is clicked.
            e.g. <code>on_click([](click&amp;){exit()},tx("click to exit",f,c))</code>
 </li>
 </ul><p>These widgets can be combined to create e.g. a button (code is C++14):</p>
