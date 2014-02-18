@@ -1,37 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Libtoys by arauhala</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Libtoys : Generic C++ microwidgets for UI development (proof of concept)" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Libtoys</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Libtoys</h1>
-        <p>Generic C++ microwidgets for UI development (proof of concept)</p>
 
-        <p class="view"><a href="https://github.com/arauhala/libtoys">View the Project on GitHub <small>arauhala/libtoys</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/arauhala/libtoys">View on GitHub</a>
 
+          <h1 id="project_title">Libtoys</h1>
+          <h2 id="project_tagline">Generic C++ microwidgets for UI development (proof of concept)</h2>
 
-        <ul>
-          <li><a href="https://github.com/arauhala/libtoys/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/arauhala/libtoys/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/arauhala/libtoys">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arauhala/libtoys/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arauhala/libtoys/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h3>
 <a name="introduction-to-libtoys" class="anchor" href="#introduction-to-libtoys"><span class="octicon octicon-link"></span></a>Introduction to libtoys</h3>
 
-<p>libtoys is a proof-of-concept library demonstrating a design build on simplest possible UI widgets doing exactly one things and nothing more. As an addition to these 'micro widgets' being extremely simple, there are only handful of them. In fact, the main provided micro widgets are:</p>
+<p>libtoys is a proof-of-concept library demonstrating a design based on the simplest possible UI widgets that do exactly one things and nothing more. These 'micro widgets' are not only extremely simple, but there is also only a handful of them. In fact, the main provided micro widgets are:</p>
 
 <ul>
 <li>
@@ -69,12 +72,9 @@
 <h3>
 <a name="design-and-capabilities" class="anchor" href="#design-and-capabilities"><span class="octicon octicon-link"></span></a>Design and capabilities</h3>
 
-<p>The leading idea behind libtoys is minimalism and it follows strictly the UNIX way, where the system should consist of minimalistic tools doing one orthogonal thing right. The solution's power should raise from the way the components are combined instead of the component's internal complexity. This extreme minimalism brings certain benefits: </p>
+<p>The leading idea behind libtoys is minimalism and it follows strictly the UNIX way, where the system should consist of minimalistic tools doing one orthogonal thing right and where the power raises from the way the components are combined instead of the component's internal complexity. This extreme minimalism brings small learning overhead and make it easier to master the small tool set thus making it faster to get things done.</p>
 
-<ul>
-<li>Small learning overhead. libtoys contains less than dozen extremely simple primitives and while it the number will undoubtedly grow, the library should remain relatively simple &amp; small.</li>
-<li>The small base of simple but powerful items is easy master. This easiness to master comprehend the powerful tool set is expected to make the programming more productive and efficient.</li>
-</ul><p>Also often the abstract technical primitives are forever (e.g. BSD sockets), while more specific services tend to not fully fulfil the wavering application needs. E.g  bigger applications (and especially games) may rely almost entirely on custom UI components. libtoys does not even try to provide ready-to-use widgets, but instead supports you in making your own.</p>
+<p>Also often the abstract technical primitives are forever (e.g. BSD sockets), while more specific services tend to not fully fulfil the wavering application needs. E.g  bigger applications (and especially games) may rely almost entirely on custom UI components. libtoys does not even try to provide ready-to-use widgets, but instead supports you in making your own, which is anyway a major activity in UI projects. </p>
 
 <p>Other design goals of libtoys are:</p>
 
@@ -221,12 +221,17 @@ class can implement the interface directly as done in resizing_item class. </p>
 
 <p>I (Antti Rauhala) am a software engineer and data scientist at Futurice, who has a background in systems programming, mobile, machine learning and search. My previous projects are freeform (freeform.sourceforge.net) meta language and re-expression method (libreexp.github.com) that is a new kind of representation learning method.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/arauhala">arauhala</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Libtoys maintained by <a href="https://github.com/arauhala">arauhala</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
