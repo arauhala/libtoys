@@ -181,12 +181,12 @@ class can implement the interface directly as done in resizing_item class. </p>
     <span class="k">return</span>
         <span class="nf">owned_itoy</span><span class="p">(</span>
             <span class="n">sz</span><span class="p">(</span><span class="n">xy</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
-                <span class="n">on_click</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="n">changed</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">)</span> <span class="p">{</span>
-                             <span class="o">*</span><span class="n">state</span> <span class="o">=</span> <span class="o">!*</span><span class="n">state</span><span class="p">;</span> <span class="n">changed</span><span class="p">(</span><span class="o">*</span><span class="n">state</span><span class="p">);</span>
-                         <span class="p">},</span>
-                         <span class="n">prop</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">black</span><span class="p">]</span> <span class="p">()</span> <span class="p">{</span> 
-                                  <span class="k">return</span> <span class="o">*</span><span class="n">state</span> <span class="o">?</span> <span class="n">on</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">:</span> <span class="n">off</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
-                   <span class="p">}))));</span>
+               <span class="n">on_click</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="n">changed</span><span class="p">](</span><span class="n">click</span><span class="o">&amp;</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="o">*</span><span class="n">state</span> <span class="o">=</span> <span class="o">!*</span><span class="n">state</span><span class="p">;</span> <span class="n">changed</span><span class="p">(</span><span class="o">*</span><span class="n">state</span><span class="p">);</span>
+                        <span class="p">},</span>
+                        <span class="n">prop</span><span class="p">([</span><span class="n">state</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">black</span><span class="p">]</span> <span class="p">()</span> <span class="p">{</span> 
+                            <span class="k">return</span> <span class="o">*</span><span class="n">state</span> <span class="o">?</span> <span class="n">on</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">:</span> <span class="n">off</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+                        <span class="p">}))));</span>
 <span class="p">}</span>
 
 <span class="c1">// composing a stateful and flat (not split into several memory blocks) widget from stateless</span>
