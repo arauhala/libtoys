@@ -209,6 +209,19 @@ namespace toys {
 		template <typename _graphics, typename _pixel>
 		void fill_rect(_graphics& g, const vec& size, _pixel p);
 
+		template <typename _traits, typename _toyr>
+		class wrap: public _traits::base_type {
+		public:
+			typedef typename _traits::graphics_type graphics_type;
+		private:
+			_toyr t_;
+		public:
+			wrap(const _toyr& t) : t_(t) {}
+			vec size(const vec& size) const 					{ return t_->size(size); };
+			void draw(const vec& size, graphics_type& i) const  { return t_->draw(size, i); }
+			bool recv(const vec& size, ievent& e) 				{ return t_->recv(size, e); }
+		};
+
 		template <typename _traits, typename _pixel>
 		class rect : public _traits::base_type {
 			public:
@@ -379,6 +392,12 @@ namespace toys {
 			operator _t () const {
 				return l_();
 			}
+			_t operator ->() const {
+				return l_();
+			}
+			_t operator ->() {
+				return l_();
+			}
 		};
 
 	}
@@ -407,10 +426,10 @@ namespace toys {
 				return v_;
 			}
 			const T* get() const {
-				return v_;
+				return &v_;
 			}
 			T* get() {
-				return v_;
+				return &v_;
 			}
 	};
 
@@ -458,8 +477,8 @@ namespace toys {
 	template <typename _traits, typename _mem>
 	class box {
 		public:
-			template <typename T>
-			static auto ref(const T& t) {
+			template <typename _t>
+			static auto ref(const _t& t) {
 				return _mem::ref(t);
 			}
 			template <typename _tr, typename _toy_ref>

@@ -1,4 +1,4 @@
-#include "toys/itoy.h"
+#include "toys/toys.h"
 #include "toys/text.h"
 #include "toys/sdl.h"
 #include "tester.h"
@@ -201,7 +201,7 @@ void add_toy_tests(test_runner& runner) {
 }
 
 int main(int argc, char** argv) {
-	test_runner t("toys tests");
+	test_runner t("toys test");
 	add_toy_tests(t);
 	return t.exec(argc, argv);
 }

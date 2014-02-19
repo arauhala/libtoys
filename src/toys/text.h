@@ -8,7 +8,7 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include "toys/itoy.h"
+#include "toys/toys.h"
 
 namespace toys {
 

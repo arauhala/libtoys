@@ -20,7 +20,7 @@ char* gets(char*);
 #endif
 
 
-#include "toys/itoy.h"
+#include "toys/toys.h"
 #include <stdint.h>
 
 
@@ -119,6 +119,8 @@ namespace toys {
 				typedef rgba 		 color_type;
 		};
 
+		typedef traits::base_type itoy;
+
 		struct baseless_traits {
 			public:
 				typedef gen::stoy    base_type;
@@ -126,6 +128,16 @@ namespace toys {
 				typedef graphics 	 graphics_type;
 				typedef TTF_Font*    font_type;
 				typedef rgba 		 color_type;
+		};
+
+		template <typename _tref>
+		std::unique_ptr<itoy> owned_itoy(_tref t) {
+			return std::unique_ptr<itoy>(new gen::wrap<traits, _tref>(t));
+		};
+
+		template <typename _tref>
+		std::shared_ptr<itoy> shared_itoy(_tref t) {
+			return std::shared_ptr<itoy>(new gen::wrap<traits, _tref>(t));
 		};
 
 		template <typename _toyr>
@@ -180,10 +192,10 @@ namespace toys {
 			}
 		};
 
-		const char* utf8_ptr(const char* s) {
+		inline const char* utf8_ptr(const char* s) {
 			return s;
 		}
-		const char* utf8_ptr(const std::string& s) {
+		inline const char* utf8_ptr(const std::string& s) {
 			return s.c_str();
 		}
 
@@ -274,11 +286,7 @@ namespace toys {
 
 
 		template <>
-		void fill_rect<sdl::graphics, sdl::rgba>(sdl::graphics& g, const vec& size, sdl::rgba c) {
-			SDL_Rect r = { g.tr().x(), g.tr().y(), size.x(), size.y() };
-			SDL_SetRenderDrawColor( g.renderer(), c.r, c.g, c.b, 255 );
-			SDL_RenderFillRect( g.renderer(), &r );
-		}
+		void fill_rect<sdl::graphics, sdl::rgba>(sdl::graphics& g, const vec& size, sdl::rgba c);
 	}
 
 }
